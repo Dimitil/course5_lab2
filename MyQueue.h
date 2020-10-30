@@ -125,6 +125,7 @@ public:
         other.m_cap = 0;
         other.m_first = 0;
         other.m_last = 0;
+
         _realloc();
 
         return *this;
@@ -178,7 +179,6 @@ public:
         }
         std::cout<<'\n';
     }
-
 
 };
 

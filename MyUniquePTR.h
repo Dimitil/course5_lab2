@@ -8,24 +8,16 @@ class MyUniquePTR{
 
 public:
 
-    MyUniquePTR(T *obj)
-    {
-        m_ptr = obj;
-    }
-
-    MyUniquePTR()
-    {
-        m_ptr = nullptr;
-    }
+    MyUniquePTR(T *obj = nullptr) : m_ptr(obj)  { }
 
     ~MyUniquePTR()
     {
         delete m_ptr;
     }
 
-    MyUniquePTR(const MyUniquePTR& other) = delete;
+    //MyUniquePTR(const MyUniquePTR& other) = delete; автоматически удален
 
-    MyUniquePTR operator=(const MyUniquePTR& other) = delete;
+    //MyUniquePTR operator=(const MyUniquePTR& other) = delete; автоматически удален
 
     MyUniquePTR(MyUniquePTR&& other)
     {
