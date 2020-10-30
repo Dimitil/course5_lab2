@@ -17,27 +17,28 @@ class MyQueue
 
     void _realloc()
     {
+        size_t old_cap = m_cap;
         m_cap = m_size + add;
-        T* tmp = new T[m_cap];
+        T* tmp = new T[m_cap]{};
 
         for(size_t i = 0; i < m_size; i++)
         {
-            tmp[i] = std::move(m_data[(m_first + i) % m_cap]);
+            tmp[i] = std::move(m_data[(m_first + i) % old_cap]);
         }
         delete[] m_data;
         m_data = tmp;
 
         m_first = 0;
-        m_last = m_size;
+        m_last = (m_first + m_size) % m_cap;
     }
 
 
 public:
 
-    virtual ~MyQueue()
+    ~MyQueue()
     {
         delete[] m_data;
-        m_data = nullptr;
+        //m_data = nullptr;
     }
 
     MyQueue(size_t n) : m_cap(n + add), m_first(0), m_last(n), m_size(n)
@@ -48,8 +49,8 @@ public:
     MyQueue(std::initializer_list<T> il) : m_size(il.size()),
         m_first(0), m_last(il.size())
     {
-        m_cap = il.size()+add;
-        m_data = new T[il.size() + add];
+        m_cap = il.size() + add;
+        m_data = new T[il.size() + add]{};
 
         size_t iter = 0;
         for(auto &elem : il)
@@ -87,10 +88,9 @@ public:
         {
             _realloc();
         }
-        m_last = (m_first + m_size) % m_cap;
         m_data[m_last] = t;
-        ++m_last;
         ++m_size;//проверить
+        m_last = (m_first + m_size) % m_cap;
     }
 
     size_t size() const
@@ -98,11 +98,18 @@ public:
         return m_size;
     }
 
+    size_t capacity() const
+    {
+        return m_cap;
+    }
+
     T pop()
     {
-        ++m_first;
+        size_t old_first = m_first;
+        m_first++;
+        m_first %= m_cap;
         --m_size;
-        return m_data[m_first-1];
+        return m_data[old_first];
     }
 
     void print()

@@ -3,32 +3,7 @@
 #include "MyQueue.h"
 #include "MyString.h"
 #include <string>
-//class Point{
-//public:
-//  int x;
-//  int y;
-//public:
-//  Point(int a, int b):x(a), y(b){}
-//friend std::ostream& operator<<(std::ostream& out, const Point& p)
-//{
-//    out<<p.x<<' '<<p.y;
-//    return out;
-//}
-//};
 
-//bool operator>(const Point &a, const Point &b)
-//{
-//    return a.x>b.x;
-//}
-//bool operator<(const Point &a, const Point &b)
-//{
-//    return a.x<b.x;
-//}
-
-//bool operator==(const Point &a, const Point &b)
-//{
-//    return a.x==b.x;
-//}
 
 int main()
 {
@@ -42,32 +17,29 @@ int main()
     uv.print();
     uv.pop();
     uv.print();
-    //UniqueVector<Point> uvp = {Point(3,2),Point(2,4),Point(4,2)};
-    //uvp.sort('g');
-    //uvp.print();
 
 
-    MyQueue<std::string> q1{ std::string("AAA"), std::string ("qwerty"), std::string("lkasje")};
+
+    MyQueue<std::string> q1{ std::string("AAA")};
     //использование MyQueue в диапазонном for:
-    for (auto& el : q1) { std::cout << el << ' '; }
-    std::cout<<'\n';
 
-    std::string s("abc");
-    q1.push(s);
+//    for (auto& el : q1) { std::cout << el << ' '; }     //такое чтение не получается всегда хорошо сделать
+//    std::cout<<'\n';
 
-    q1.push(std::string("123"));
-    //for (auto& el : q1) { std::cout << el << ' '; }     //такое чтение не получается всегда хорошо сделать
-    //std::cout<<'\n';
-    std::string s1 = q1.pop();
-
-    q1.push("sss");
-
-    q1.push("WWW");
-    q1.push("FFF");
-    q1.push("SDA");
-
+    q1.push("qwe");
+    q1.push("asdfasde");
+    q1.push("qnba");
+    q1.push("qn12312a");
+    for(int i=0; i<4; i++){
+        q1.pop();
+    }
+    q1.push("qvns");
+    q1.push("1111");
+    std::cout<<q1.size()<<q1.capacity();
     q1.print();
-    std::cout<<q1.size();
+
+
+
 
     //MyQueue < MyString > q2 = q1;
     //q2.print();
