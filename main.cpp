@@ -103,6 +103,6 @@ int main()
         l.insert(l.begin(), std::move(*it));
         v.pop_back();
     }
-    std::cout<<v.size();
+
     return 0;
 }

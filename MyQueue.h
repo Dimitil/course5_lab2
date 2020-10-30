@@ -40,6 +40,8 @@ public:
     {
         delete[] m_data;
         m_data = nullptr;
+        m_size = 0;
+        m_cap = 0;
     }
 
     MyQueue(size_t n, const T &t) : m_size(n), m_cap(n + add),
