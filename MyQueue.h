@@ -42,8 +42,8 @@ public:
         m_data = nullptr;
     }
 
-    MyQueue(size_t n, const T &t) : m_cap(n + add), m_first(0), m_last(n),
-        m_size(n)
+    MyQueue(size_t n, const T &t) : m_size(n), m_cap(n + add),
+        m_first(0), m_last(n)
     {
         m_data = new T[m_cap];
 
@@ -53,7 +53,8 @@ public:
         }
     }
 
-    MyQueue(size_t n) : m_cap(n + add), m_first(0), m_last(n), m_size(n)
+    MyQueue(size_t n) : m_size(n), m_cap(m_size + add),
+        m_first(0), m_last(n)
     {
         m_data = new T[m_cap]{};
     }
@@ -122,7 +123,6 @@ public:
         other.m_cap = 0;
         other.m_first = 0;
         other.m_last = 0;
-
         _realloc();
 
         return *this;

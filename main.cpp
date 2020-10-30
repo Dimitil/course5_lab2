@@ -2,8 +2,10 @@
 #include "UniqueVector.h"
 #include "MyQueue.h"
 #include "MyString.h"
+#include "MyUniquePTR.h"
 #include <string>
-
+#include <vector>
+#include <list>
 
 int main()
 {
@@ -62,5 +64,37 @@ int main()
     q1 = { MyString("bbb"), MyString ("ssss")};
     q1.print();
 
+
+
+    MyUniquePTR<MyString> p1(new MyString ("abc"));
+
+    std:: cout<<p1->GetString();
+
+    p1->SetNewString("qwerty");
+
+    std:: cout << '\n' << p1->GetString() << '\n';
+    MyString s2 = *p1;
+
+//    MyUniquePTR< MyString > p2=p1; //здесь компилятор должен выдавать ошибку =>
+
+//    Исправьте!
+    MyUniquePTR<MyString> p11;
+    if(p11) {std::cout<<"have object!";} //а это должно работать
+    else {std::cout<<"no object";}
+
+    MyUniquePTR< MyString > p3(new MyString ("vvv"));
+    MyUniquePTR< MyString > p2;
+    //p3 = p2; //и здесь компилятор должен выдавать ошибку
+
+    MyUniquePTR< MyString >  const  pc(new MyString("PCPCPC"));
+    std::cout<< (*pc).GetString();
+
+    std::vector< MyUniquePTR< MyString >> v;
+    v.push_back(new MyString("QWE"));
+
+    std::list< MyUniquePTR< MyString >> l;
+    l.insert(l.end(), new MyString("QWE"));
+
     return 0;
+
 }
