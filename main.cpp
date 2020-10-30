@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <algorithm>
 
 int main()
 {
@@ -91,10 +92,17 @@ int main()
 
     std::vector< MyUniquePTR< MyString >> v;
     v.push_back(new MyString("QWE"));
+    v.push_back(new MyString("Qeqwe"));
+    v.push_back(new MyString("123E"));
 
     std::list< MyUniquePTR< MyString >> l;
-    l.insert(l.end(), new MyString("QWE"));
+    //l.insert(l.end(), new MyString("QWE"));
 
+    for(auto it = v.rbegin(); it != v.rend(); ++it)
+    {
+        l.insert(l.begin(), std::move(*it));
+        v.pop_back();
+    }
+    std::cout<<v.size();
     return 0;
-
 }

@@ -18,6 +18,11 @@ public:
         m_ptr = nullptr;
     }
 
+    ~MyUniquePTR()
+    {
+        delete m_ptr;
+    }
+
     MyUniquePTR(const MyUniquePTR& other) = delete;
 
     MyUniquePTR operator=(const MyUniquePTR& other) = delete;
