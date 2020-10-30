@@ -20,7 +20,7 @@ int main()
 
 
 
-    MyQueue<std::string> q1{ std::string("AAA")};
+    MyQueue<MyString> q1{ MyString("AAA")};
     //использование MyQueue в диапазонном for:
 
 //    for (auto& el : q1) { std::cout << el << ' '; }     //такое чтение не получается всегда хорошо сделать
@@ -41,21 +41,26 @@ int main()
 
 
 
-    //MyQueue < MyString > q2 = q1;
+    MyQueue < MyString > q2{};
+    q2 = q1;
     //q2.print();
     //q1.print();
 
-    //MyQueue < MyString > q22 = std::move(q1);
 
-    //MyQueue < MyString > q3{10, MyString (“!”)}; //очередь должна содержать 10 элементов со строкой «!»
+    MyQueue < MyString > q22 = std::move(q1);
+    q22.print();
 
-    //q1 = q3;
+    MyQueue < MyString > q3{10, MyString ("!")}; //очередь должна содержать 10 элементов со строкой «!»
 
-    //q2 = MyQueue < MyString > (5, MyString (“?”));
+    q1 = q3;
 
-    //q1 = { MyString(“bbb”), MyString (“ssss”)};
+    q1.print();
 
+    q2 = MyQueue < MyString > (5, MyString ("?"));
 
+    q2.print();
+    q1 = { MyString("bbb"), MyString ("ssss")};
+    q1.print();
 
     return 0;
 }

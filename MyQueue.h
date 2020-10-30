@@ -3,23 +3,24 @@
 
 #include <stddef.h>
 #include <iostream>
+#include <new>
 
 template <typename T>
 class MyQueue
 {
-
+    size_t add = 4;
+    size_t m_size;
+    size_t m_cap;
     size_t m_first;
     size_t m_last;
-    size_t m_cap;
-    size_t m_size;
-    size_t add = 4;
+
     T* m_data;
 
     void _realloc()
     {
         size_t old_cap = m_cap;
         m_cap = m_size + add;
-        T* tmp = new T[m_cap]{};
+        T* tmp = new T[m_cap];
 
         for(size_t i = 0; i < m_size; i++)
         {
@@ -38,7 +39,18 @@ public:
     ~MyQueue()
     {
         delete[] m_data;
-        //m_data = nullptr;
+        m_data = nullptr;
+    }
+
+    MyQueue(size_t n, const T &t) : m_cap(n + add), m_first(0), m_last(n),
+        m_size(n)
+    {
+        m_data = new T[m_cap];
+
+        for(size_t i = 0 ; i < m_size; i++)
+        {
+             new (m_data + i) T(t);
+        }
     }
 
     MyQueue(size_t n) : m_cap(n + add), m_first(0), m_last(n), m_size(n)
@@ -46,11 +58,11 @@ public:
         m_data = new T[m_cap]{};
     }
 
-    MyQueue(std::initializer_list<T> il) : m_size(il.size()),
+    MyQueue(std::initializer_list<T> il) : m_size(il.size()), m_cap(il.size() + add),
         m_first(0), m_last(il.size())
     {
-        m_cap = il.size() + add;
-        m_data = new T[il.size() + add]{};
+
+        m_data = new T[m_cap];
 
         size_t iter = 0;
         for(auto &elem : il)
@@ -60,18 +72,62 @@ public:
         }
     }
 
-    MyQueue(const MyQueue& other) : m_size(other.m_size), m_first(0),
-        m_last(m_size), m_cap(m_size + add)
+    MyQueue(const MyQueue& other) :  m_size(other.m_size), m_cap(m_size + add),
+        m_first(0), m_last(m_size)
     {
-        m_data = new T[other.m_size + add];
+        m_data = new T[m_cap];
         for (size_t i=0; i<m_size; i++)
         {
-            m_data[i] = other.m_data[(other.m_first + i) % other.m_size];
+            m_data[i] = other.m_data[(other.m_first + i) % other.m_cap];
         }
     }
 
-    //копирующий оператор и тд
-    //
+    MyQueue& operator=(const MyQueue& other)
+    {
+        delete[] m_data;
+        m_size = other.m_size;
+        m_cap = m_size + add;
+        m_first = 0;
+        m_last = m_size;
+
+        m_data = new T[m_cap];
+        for (size_t i=0; i<m_size; i++)
+        {
+            m_data[i] = other.m_data[(other.m_first + i) % other.m_cap];
+        }
+        return *this;
+    }
+
+    MyQueue(MyQueue &&other) : m_size(other.m_size), m_cap(other.m_cap),
+        m_first(other.m_first), m_last(other.m_last), m_data(other.m_data)
+    {
+        other.m_data = nullptr;
+        other.m_size = 0;
+        other.m_cap = 0;
+         _realloc();
+    }
+
+    MyQueue& operator=(MyQueue&& other)
+    {
+        delete[] m_data;
+
+        m_data = other.m_data;
+        m_size = other.m_size;
+        m_cap = other.m_cap;
+        m_first = other.m_first;
+        m_last = other.m_last;
+
+        other.m_data = nullptr;
+        other.m_size = 0;
+        other.m_cap = 0;
+        other.m_first = 0;
+        other.m_last = 0;
+
+        _realloc();
+
+        return *this;
+    }
+
     T* begin() const
     {
         return m_data + m_first;
