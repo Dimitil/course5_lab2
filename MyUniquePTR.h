@@ -19,6 +19,14 @@ public:
 
     //MyUniquePTR operator=(const MyUniquePTR& other) = delete; автоматически удален
 
+    MyUniquePTR& operator=(MyUniquePTR&& other)
+    {
+        m_ptr = other.m_ptr;
+        other.m_ptr = nullptr;
+
+        return *this;
+    }
+
     MyUniquePTR(MyUniquePTR&& other)
     {
         m_ptr = other.m_ptr;

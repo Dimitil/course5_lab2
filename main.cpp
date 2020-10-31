@@ -92,18 +92,25 @@ int main()
     std::cout<< (*pc).GetString();
 
     std::vector< MyUniquePTR< MyString >> v;
+
     v.push_back(new MyString("QWE"));
     v.push_back(new MyString("Qeqwe"));
     v.push_back(new MyString("123E"));
+    v.emplace_back(new MyString("faxd"));
 
-    std::list< MyUniquePTR< MyString >> l;
-    //l.insert(l.end(), new MyString("QWE"));
 
-    for(auto it = v.rbegin(); it != v.rend(); ++it)
-    {
-        l.insert(l.begin(), std::move(*it));
-        v.pop_back();
-    }
+    std::list< MyUniquePTR< MyString >> l(make_move_iterator(v.begin()), make_move_iterator(v.end()));
+
+    l.insert(l.end(), new MyString("QWE"));
+
+//    l.clear();
+
+//    for(auto it = v.begin(); it != v.end(); ++it)
+//    {
+//        l.insert(l.end(), std::move(*it));
+//    }
+
+    //в векторе остались недействительные указатели.
 
     return 0;
 }
