@@ -76,6 +76,7 @@ int main()
     std:: cout << '\n' << p1->GetString() << '\n';
     MyString s2 = *p1;
 
+
 //    MyUniquePTR< MyString > p2=p1; //здесь компилятор должен выдавать ошибку =>
 
 //    Исправьте!

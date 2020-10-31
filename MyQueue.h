@@ -33,8 +33,8 @@ class MyQueue
         m_last = (m_first + m_size) % m_cap;
     }
 
-
 public:
+
 
     ~MyQueue()
     {
@@ -101,17 +101,25 @@ public:
         return *this;
     }
 
-    MyQueue(MyQueue &&other) : m_size(other.m_size), m_cap(other.m_cap),
-        m_first(other.m_first), m_last(other.m_last), m_data(other.m_data)
+    MyQueue(MyQueue &&other)
     {
+        other._realloc();
+
+        m_size = other.m_size;
+        m_cap = other.m_cap;
+        m_first = other.m_first;
+        m_last = other.m_last;
+        m_data = other.m_data;
+
+
         other.m_data = nullptr;
         other.m_size = 0;
         other.m_cap = 0;
-         _realloc();
     }
 
     MyQueue& operator=(MyQueue&& other)
     {
+        other._realloc();
         delete[] m_data;
 
         m_data = other.m_data;
@@ -123,10 +131,6 @@ public:
         other.m_data = nullptr;
         other.m_size = 0;
         other.m_cap = 0;
-        other.m_first = 0;
-        other.m_last = 0;
-
-        _realloc();
 
         return *this;
     }
