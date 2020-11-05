@@ -15,15 +15,18 @@ public:
         delete m_ptr;
     }
 
-    //MyUniquePTR(const MyUniquePTR& other) = delete; автоматически удален
+    MyUniquePTR(const MyUniquePTR& other) = delete;
 
-    //MyUniquePTR operator=(const MyUniquePTR& other) = delete; автоматически удален
+    MyUniquePTR operator=(const MyUniquePTR& other) = delete;
 
     MyUniquePTR& operator=(MyUniquePTR&& other)
     {
-        m_ptr = other.m_ptr;
-        other.m_ptr = nullptr;
-
+        if(&other != this)
+        {
+            delete m_ptr;
+            m_ptr = other.m_ptr;
+            other.m_ptr = nullptr;
+        }
         return *this;
     }
 
@@ -38,7 +41,7 @@ public:
         return *m_ptr;
     }
 
-    T& operator*() const
+    const T& operator*() const
     {
         return *m_ptr;
     }
@@ -48,12 +51,12 @@ public:
         return m_ptr;
     }
 
-    T* operator->() const
+    const T* operator->() const
     {
         return m_ptr;
     }
 
-    operator bool()
+    operator bool() const
     {
         return m_ptr;
     }

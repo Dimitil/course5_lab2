@@ -8,11 +8,11 @@
 template <typename T>
 class MyQueue
 {
-    size_t add = 4;
+    const size_t add = 2;
     size_t m_size;
     size_t m_cap;
     size_t m_first;
-    size_t m_last;
+    size_t m_last;          //указывать на за последний должен!!!!!!!!!!!!!!!!!!!!!!
 
     T* m_data;
 
@@ -51,7 +51,7 @@ public:
 
         for(size_t i = 0 ; i < m_size; i++)
         {
-             new (m_data + i) T(t);
+             m_data[i] = t;
         }
     }
 
@@ -67,11 +67,11 @@ public:
 
         m_data = new T[m_cap];
 
-        size_t iter = 0;
+        size_t ind = 0;
         for(auto &elem : il)
         {
-            m_data[iter] = elem;
-            ++iter;
+            m_data[ind] = elem;
+            ++ind;
         }
     }
 
@@ -87,7 +87,7 @@ public:
 
     MyQueue& operator=(const MyQueue& other)
     {
-        delete[] m_data;
+        delete[] m_data;            //перераспределять память только если её не хватит
         m_size = other.m_size;
         m_cap = m_size + add;
         m_first = 0;
@@ -103,7 +103,6 @@ public:
 
     MyQueue(MyQueue &&other)
     {
-        other._realloc();
 
         m_size = other.m_size;
         m_cap = other.m_cap;
@@ -115,11 +114,13 @@ public:
         other.m_data = nullptr;
         other.m_size = 0;
         other.m_cap = 0;
+        other.m_first = 0;
+        other.m_last = 0;
+
     }
 
     MyQueue& operator=(MyQueue&& other)
     {
-        other._realloc();
         delete[] m_data;
 
         m_data = other.m_data;
@@ -131,16 +132,27 @@ public:
         other.m_data = nullptr;
         other.m_size = 0;
         other.m_cap = 0;
-
+        other.m_first = 0;
+        other.m_last = 0;
         return *this;
     }
 
-    T* begin() const
+    const T* begin() const
     {
         return m_data + m_first;
     }
 
-    T* end() const
+    const T* end() const
+    {
+        return m_data + m_last;
+    }
+
+    T* begin()
+    {
+        return m_data + m_first;
+    }
+
+    T* end()
     {
         return m_data + m_last;
     }

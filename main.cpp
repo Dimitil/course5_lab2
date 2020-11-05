@@ -1,12 +1,12 @@
 #include <iostream>
-#include "UniqueVector.h"
-#include "MyQueue.h"
-#include "MyString.h"
-#include "MyUniquePTR.h"
 #include <string>
 #include <vector>
 #include <list>
 #include <algorithm>
+#include "UniqueVector.h"
+#include "MyQueue.h"
+#include "MyString.h"
+#include "MyUniquePTR.h"
 
 int main()
 {
@@ -31,15 +31,17 @@ int main()
 
     q1.push("qwe");
     q1.push("asdfasde");
-    q1.push("qnba");
-    q1.push("qn12312a");
-    for(int i=0; i<4; i++){
-        q1.pop();
-    }
-    q1.push("qvns");
-    q1.push("1111");
-    std::cout<<q1.size()<<q1.capacity();
-    q1.print();
+//    q1.push("qnba");
+//    q1.push("qn12312a");
+//    for(int i=0; i<4; i++){
+//        q1.pop();
+//    }
+//    q1.push("qvns");
+//    q1.push("1111");
+//    std::cout<<q1.size()<<q1.capacity();
+    for (auto& el : q1) { std::cout << el << ' '; }     //такое чтение не получается всегда хорошо сделать
+    std::cout<<'\n';
+   q1.print();
 
 
 

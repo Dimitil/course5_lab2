@@ -16,7 +16,7 @@ class UniqueVector
 public:
     UniqueVector() = default;
 
-    UniqueVector(std::initializer_list<T> il, T min, T max) : m_min(min), m_max(max)  //добавить мин и макс
+    UniqueVector(std::initializer_list<T> il, const T& min, const T& max) : m_min(min), m_max(max)  //добавить мин и макс
     {
         m_data.reserve(il.size());
         for( auto &elem : il)
@@ -81,6 +81,7 @@ public:
 
     void push(const T &t)
     {
+        //проверка на уникальность дописать !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         m_data.push_back(t);
     }
 
@@ -91,6 +92,7 @@ public:
 
     void push(T &&t)
     {
+        //проверка на уникальность дописать !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         m_data.push_back(std::move(t));
     }
 
