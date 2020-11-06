@@ -8,6 +8,7 @@
 #include "MyString.h"
 #include "MyUniquePTR.h"
 
+
 int main()
 {
     UniqueVector<int> uv ({1, 2, 4, 4, 5}, 0, 10);
@@ -25,39 +26,40 @@ int main()
 
     MyQueue<MyString> q1{ MyString("AAA")};
     //использование MyQueue в диапазонном for:
+    q1.push("BBB");
+    q1.pop();
+    q1.push("CCC");
+    //for (auto& el : q1) { std::cout << el << ' '; }
 
-//    for (auto& el : q1) { std::cout << el << ' '; }     //такое чтение не получается всегда хорошо сделать
-//    std::cout<<'\n';
 
-    q1.push("qwe");
-    q1.push("asdfasde");
-//    q1.push("qnba");
-//    q1.push("qn12312a");
-//    for(int i=0; i<4; i++){
-//        q1.pop();
-//    }
-//    q1.push("qvns");
-//    q1.push("1111");
+
+    q1.push("DDD");
+    q1.push("EEE");
+    for(int i=0; i<4; i++){
+        q1.pop();
+    }
+    q1.push("FFF");
+    q1.push("GGG");
 //    std::cout<<q1.size()<<q1.capacity();
     for (auto& el : q1) { std::cout << el << ' '; }     //такое чтение не получается всегда хорошо сделать
-    std::cout<<'\n';
-   q1.print();
+    std::cout << "\nLOOK UP2\n";
 
 
 
 
-    MyQueue < MyString > q2{};
-    q2 = q1;
+
+    MyQueue < MyString > q2(q1);
+    //q2 = q1;
     //q2.print();
     //q1.print();
 
 
-    MyQueue < MyString > q22 = std::move(q1);
-    q22.print();
+    //MyQueue < MyString > q22 = std::move(q1);
+    //q22.print();
 
     MyQueue < MyString > q3{10, MyString ("!")}; //очередь должна содержать 10 элементов со строкой «!»
 
-    q1 = q3;
+    q1 = std::move(q3);
 
     q1.print();
 

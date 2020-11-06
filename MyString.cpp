@@ -29,6 +29,7 @@ MyString::~MyString()
     if(m_pStr)
     {
         delete[] m_pStr;
+        m_pStr = nullptr;
     }
 	m_len = 0;
 }
