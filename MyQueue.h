@@ -159,7 +159,8 @@ public:
 
     void push(const T& t)
     {
-        if(m_size == m_cap)
+        if(m_size//+1
+                == m_cap)
         {
             _realloc();
         }
