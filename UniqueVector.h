@@ -81,8 +81,12 @@ public:
 
     void push(const T &t)
     {
-        //проверка на уникальность дописать !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        m_data.push_back(t);
+        auto it = std::find(m_data.begin(), m_data.end(), t); //исправлено
+
+        if (it != m_data.end())
+        {
+            m_data.push_back(t);
+        }
     }
 
     void pop()
@@ -92,8 +96,11 @@ public:
 
     void push(T &&t)
     {
-        //проверка на уникальность дописать !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        m_data.push_back(std::move(t));
+        auto it = std::find(m_data.begin(), m_data.end(), t); //исправлено
+        if (it != m_data.end())
+        {
+            m_data.push_back(std::move(t));
+        }
     }
 
 
