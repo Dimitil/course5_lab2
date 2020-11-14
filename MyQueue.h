@@ -116,6 +116,9 @@ public:
     }
 
     MyQueue& operator=(const MyQueue& other) {
+        if(this == &other) {
+            return *this;
+        }
         if (m_cap < other.m_size) {
             delete[] m_data;            //исправленно
             m_cap   = other.m_size + add;
